@@ -6,8 +6,8 @@
 </template>
 
 <script setup>
-import TodoInput from './todoList/TodoInput.vue';
-import TodoList from './todoList/TodoList.vue';
+import TodoInput from './todo/TodoInput.vue';
+import TodoList from './todo/TodoList.vue';
 
 </script>
 
