@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="todolist container">
     <h3>TodoList</h3>
     <TodoItem />
     <TodoItem />
