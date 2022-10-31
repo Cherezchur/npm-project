@@ -1,9 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+const store = createStore({
   state: {
     todos: [
       {
@@ -15,9 +12,9 @@ export default new Vuex.Store({
         title: 'Two'
       },
       {
-        id: 1,
+        id: 3,
         title: 'Three'
-      },
+      }
     ]
   },
   getters: {
@@ -38,3 +35,5 @@ export default new Vuex.Store({
 
   }
 })
+
+export default store;
