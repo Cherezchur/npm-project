@@ -1,7 +1,6 @@
 <template>
   <div class="item">
-    <input v-model="todoTitle">
-    <button @click="editTodo">Edit</button>
+    <input v-model="todoTitle" @change="editTodo">
     <button @click="deleteTodo">Delete</button>
   </div>
 </template>
@@ -19,7 +18,7 @@ const props = defineProps({
 const todoTitle = ref(props.todo.title)
 
 const editsParams = {
-  text: todoTitle.value, 
+  text: todoTitle, 
   id: props.todo.id
 }
 
@@ -28,7 +27,6 @@ const deleteTodo = () => {
 }
 
 const editTodo = () => {
-  console.log(props.todo.id);
   store.dispatch('editTodo', editsParams)
 }
 

@@ -16,6 +16,7 @@ const name = ref('')
 
 const addTodos = () => {
   store.dispatch('addTodo', {id: Date.now(), title: todo.value})
+  
 }
 
 watch(name, (newVal) => {

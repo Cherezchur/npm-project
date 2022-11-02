@@ -1,46 +1,62 @@
 import { createStore } from 'vuex'
 
+if(localStorage.todoList === 'undefined') { localStorage.removeItem('todoList')}
+
 const store = createStore({
   state: {
-    todos: [
-      {
-        id: 1,
-        title: 'One'
-      },
-      {
-        id: 2,
-        title: 'Two'
-      },
-      {
-        id: 3,
-        title: 'Three'
-      }
-    ]
+    todos: localStorage.todoList ? 
+      JSON.parse(localStorage.getItem('todoList')) : 
+      [
+        {
+          id: 1,
+          title: 'One'
+        },
+        {
+          id: 2,
+          title: 'Two'
+        },
+        {
+          id: 3,
+          title: 'Three'
+        }
+      ]
   },
   getters: {
-    allTodos: (state) => state.todos,
+    ALLTODOS: (state) => state.todos,
   },
   actions: {
-    addTodo({ commit }, todo) {
-      commit('add_todo', todo);
+    addLocalStorage({commit}) {
+      commit('add_local_storage')
     },
-    removeTodo({ commit }, todoId) {
-      commit('remove_todo', todoId)
+    addTodo({ commit, dispatch }, todo) {
+      commit('add_todo', todo)
+      dispatch('addLocalStorage')
     },
-    editTodo({ commit }, editParams) {
+    removeTodo({ commit, dispatch  }, id) {
+      commit('remove_todo', id)
+      dispatch('addLocalStorage')
+    },
+    editTodo({ commit, dispatch  }, editParams) {
       commit('edit_todo', editParams)
+      dispatch('addLocalStorage')
     }
   },
   mutations: {
-    add_todo(state, todo) {
-      state.todos.push(todo);
+    add_local_storage(state) {
+      localStorage.setItem('todoList', JSON.stringify(state.todos))
     },
-    remove_todo(state, todoId) {
-      state.todos = state.todos.filter(todo => todo.id !== todoId);
+    add_todo(state, todo) {
+      state.todos.push(todo)
+      store.getters['ALLTODOS']
+    },
+    remove_todo(state, id) {
+      state.todos = state.todos.filter(todo => todo.id !== id);
+      store.getters['ALLTODOS']
     },
     edit_todo(state, editParams) {
-      console.log(editParams.text, editParams.id);
-      state.todos.find(todo => todo.id === editParams.id)
+      const todosChange = state.todos.find(todo => todo.id === editParams.id)
+      todosChange.title = editParams.text.value
+      store.getters['ALLTODOS']
     }
   },
   modules: {
