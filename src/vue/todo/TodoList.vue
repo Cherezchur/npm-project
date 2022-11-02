@@ -1,16 +1,16 @@
 <template>
   <div class="todolist container">
     <h3>TodoList</h3>
-    <TodoItem />
-    <TodoItem />
-    <TodoItem />
-    <TodoItem />
-    <TodoItem />
+    <TodoItem v-for="todo in todoList" :todo="todo"/>
   </div>
 </template>
 
 <script setup>
-import TodoItem from './TodoItem.vue';
+import TodoItem from './TodoItem.vue'
+import store from './../store/store'
+import {computed} from 'vue'
+
+const todoList = computed(() => { return store.getters['allTodos'] });
 
 </script>
 

@@ -24,11 +24,23 @@ const store = createStore({
     addTodo({ commit }, todo) {
       commit('add_todo', todo);
     },
+    removeTodo({ commit }, todoId) {
+      commit('remove_todo', todoId)
+    },
+    editTodo({ commit }, editParams) {
+      commit('edit_todo', editParams)
+    }
   },
   mutations: {
     add_todo(state, todo) {
       state.todos.push(todo);
-      console.log(state.todos);
+    },
+    remove_todo(state, todoId) {
+      state.todos = state.todos.filter(todo => todo.id !== todoId);
+    },
+    edit_todo(state, editParams) {
+      console.log(editParams.text, editParams.id);
+      state.todos.find(todo => todo.id === editParams.id)
     }
   },
   modules: {

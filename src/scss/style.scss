@@ -14,3 +14,11 @@ $title-color: lightblue;
   width: 60vh;
   margin: auto;
 }
+
+input:not([type="radio"]):not([type="checkbox"]), button {
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+	cursor: initial;
+}

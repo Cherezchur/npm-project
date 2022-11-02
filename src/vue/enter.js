@@ -8,6 +8,5 @@ root.id = 'root';
 document.body.appendChild(root);
 
 if(root) {
-  console.log(store);
   createApp(App).use(store).mount(root);
 }
