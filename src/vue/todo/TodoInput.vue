@@ -1,8 +1,13 @@
 <template>
   <div class="todoinput container">
-    hi, <input v-model="name" type="text" placeholder="What your name?">
-    <input v-model="todo" type="text">
-    <button @click="addTodos">Add</button>
+    <div class="nameField">
+      <span>Hi!</span>
+      <input v-model="name" type="text" placeholder="What your name?">
+    </div>
+    <div class="addTodosField">
+      <input v-model="todo" class="writeTodoField" type="text">
+      <button @click="addTodos">Add</button>
+    </div>
   </div>
 </template>
 
@@ -29,5 +34,21 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.nameField {
+  display: flex;
+  margin-bottom: 20px;
+  input { 
+    margin-left: 10px;
+    color: green;
+  }
+}
+
+.addTodosField {
+  display: flex;
+  margin-bottom: 20px;
+  input { 
+    border-bottom: 1px solid green;
+  }
+}
 
 </style>
