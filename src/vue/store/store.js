@@ -4,64 +4,62 @@ if(localStorage.todoList === 'undefined') { localStorage.removeItem('todoList')}
 
 const store = createStore({
   state: {
-    todos: localStorage.todoList ? 
-      JSON.parse(localStorage.getItem('todoList')) : 
-      [
-        {
-          id: 1,
-          title: 'One'
-        },
-        {
-          id: 2,
-          title: 'Two'
-        },
-        {
-          id: 3,
-          title: 'Three'
-        }
-      ]
+    todos: [
+      {
+        id: 1,
+        title: 'One'
+      },
+      {
+        id: 2,
+        title: 'Two'
+      },
+      {
+        id: 3,
+        title: 'Three'
+      }
+    ]
+      
   },
   getters: {
     ALLTODOS: (state) => state.todos,
   },
   actions: {
-    addLocalStorage({commit}) {
-      commit('add_local_storage')
-    },
-    addTodo({ commit, dispatch }, todo) {
+    addTodo({ commit }, todo) {
       commit('add_todo', todo)
-      dispatch('addLocalStorage')
     },
-    removeTodo({ commit, dispatch  }, id) {
+    removeTodo({ commit }, id) {
       commit('remove_todo', id)
-      dispatch('addLocalStorage')
     },
-    editTodo({ commit, dispatch  }, editParams) {
+    editTodo({ commit }, editParams) {
       commit('edit_todo', editParams)
-      dispatch('addLocalStorage')
     }
   },
   mutations: {
-    add_local_storage(state) {
-      localStorage.setItem('todoList', JSON.stringify(state.todos))
+    initialise_store(state) {
+      if(localStorage.getItem('store')) {
+        this.replaceState(
+          Object.assign(state, JSON.parse(localStorage.getItem('store')))
+        )
+      }
     },
     add_todo(state, todo) {
       state.todos.push(todo)
-      store.getters['ALLTODOS']
     },
     remove_todo(state, id) {
       state.todos = state.todos.filter(todo => todo.id !== id);
-      store.getters['ALLTODOS']
     },
     edit_todo(state, editParams) {
       const todosChange = state.todos.find(todo => todo.id === editParams.id)
       todosChange.title = editParams.text.value
-      store.getters['ALLTODOS']
     }
   },
   modules: {
 
   }
+})
+
+store.subscribe((change_state, state) => {
+  localStorage.setItem('store', JSON.stringify(state))
 })
 
 export default store;

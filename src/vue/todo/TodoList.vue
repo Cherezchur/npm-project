@@ -8,17 +8,13 @@
 <script setup>
 import TodoItem from './TodoItem.vue'
 import store from './../store/store'
-import { computed, onMounted} from 'vue'
+import { computed, onBeforeMount } from 'vue'
 
-let todoList = computed(() => { 
+const todoList = computed(() => {
   return store.getters['ALLTODOS'] 
 });
 
-onMounted(() => {
-  if(localStorage.todoList) {
-    todoList = JSON.parse(localStorage.getItem('todoList'))
-  }
-})
+onBeforeMount(() => store.commit('initialise_store')) 
 
 </script>
 

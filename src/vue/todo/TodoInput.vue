@@ -21,7 +21,6 @@ const name = ref('')
 
 const addTodos = () => {
   store.dispatch('addTodo', {id: Date.now(), title: todo.value})
-  
 }
 
 watch(name, (newVal) => {
@@ -29,7 +28,9 @@ watch(name, (newVal) => {
 })
 
 onMounted(() => {
-  name.value = localStorage.getItem('name');
+  if(localStorage.getItem('name')) {
+    name.value = localStorage.getItem('name');
+  }
 })
 </script>
 
