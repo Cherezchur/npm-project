@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <input v-model="todoTitle" @change="editTodo">
-    <button @click="deleteTodo">Delete</button>
+    <button @click="deleteTodo(props.todo.id)">Delete</button>
   </div>
 </template>
 
@@ -9,11 +9,13 @@
 import store from './../store/store'
 import { ref } from 'vue'
 
+
 const props = defineProps({
   todo: {
     type: Object,
   }
 })
+const emit = defineEmits(['deleteTodo'])
 
 const todoTitle = ref(props.todo.title)
 
@@ -22,8 +24,9 @@ const editsParams = {
   id: props.todo.id
 }
 
-const deleteTodo = () => {
-  store.dispatch('removeTodo', props.todo.id)
+const deleteTodo = (id) => {
+  emit('deleteTodo', id)
+  store.dispatch('removeTodo', id)
 }
 
 const editTodo = () => {

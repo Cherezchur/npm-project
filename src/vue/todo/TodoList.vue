@@ -7,14 +7,13 @@
 
 <script setup>
 import TodoItem from './TodoItem.vue'
-import store from './../store/store'
-import { computed, onBeforeMount } from 'vue'
 
-const todoList = computed(() => {
-  return store.getters['ALLTODOS'] 
-});
-
-onBeforeMount(() => store.commit('initialise_store')) 
+defineProps({
+  todoList: {
+    type: Array,
+    default: () => []
+  }
+})
 
 </script>
 

@@ -6,7 +6,7 @@
     </div>
     <div class="addTodosField">
       <input v-model="todo" class="writeTodoField" type="text">
-      <button @click="addTodos">Add</button>
+      <button @click="handleAdd">Add</button>
     </div>
   </div>
 </template>
@@ -16,11 +16,19 @@
 import store from './../store/store'
 import { ref, computed, watch, onMounted } from 'vue'
 
+
+
+const props = defineProps({
+  addTodo: {
+    type: Function
+  }
+})
+
 const todo = ref([])
 const name = ref('')
 
-const addTodos = () => {
-  store.dispatch('addTodo', {id: Date.now(), title: todo.value})
+const handleAdd = () => {
+  props.addTodo(todo)
 }
 
 watch(name, (newVal) => {
