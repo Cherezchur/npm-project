@@ -1,7 +1,7 @@
 <template>
   <div class="item">
-    <input v-model="todoTitle" @change="editTodo">
-    <button @click="deleteTodo(props.todo.id)">Delete</button>
+    <input v-model="todoTitle" @change="$emit('editTodo', editsParams)">
+    <button @click="$emit('deleteTodo', id)">Delete</button>
   </div>
 </template>
 
@@ -15,22 +15,14 @@ const props = defineProps({
     type: Object,
   }
 })
-const emit = defineEmits(['deleteTodo'])
+
+const id = props.todo.id
 
 const todoTitle = ref(props.todo.title)
 
 const editsParams = {
   text: todoTitle, 
   id: props.todo.id
-}
-
-const deleteTodo = (id) => {
-  emit('deleteTodo', id)
-  store.dispatch('removeTodo', id)
-}
-
-const editTodo = () => {
-  store.dispatch('editTodo', editsParams)
 }
 
 </script>

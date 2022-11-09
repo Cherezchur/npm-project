@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-    <TodoInput :addTodo="addTodo"/>
-    <TodoList :todoList="todoList"/>
+    <TodoInput 
+      :addTodo="addTodo"
+    />
+    <TodoList 
+      :todoList="todoList"
+      :deleteTodo="deleteTodo"
+      :editTodo="editTodo"
+    />
   </div>
 </template>
 
@@ -13,27 +19,15 @@ import {computed} from 'vue'
 
 store.dispatch('initStore')
 
-const emit = defineEmits(['deleteTodo'])
-
-emit('deleteTodo', (id) => {
-  console.log(id)
-})
-
 const todoList = computed(() => {
   return store.getters['ALLTODOS'] 
 });
 
-const addTodo = (todo) => {
-  console.log(todo, 'todo')
-  store.dispatch('addTodo', {id: Date.now(), title: todo.value})
-}
+const addTodo = (todo) => store.dispatch('addTodo', {id: Date.now(), title: todo.value})
 
+const deleteTodo = (id) => store.dispatch('removeTodo', id)
 
-console.log(todoList.value);
-
-// return {
-//   todoList
-// }
+const editTodo = (editParams) => store.dispatch('editTodo',editParams)
 
 </script>
 

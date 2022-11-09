@@ -1,19 +1,37 @@
 <template>
   <div class="todoList container">
     <h3 class="todoList__title">TodoList</h3>
-    <TodoItem v-for="todo in todoList" :key="todo.id" :todo="todo"/>
+    <TodoItem 
+      v-for="todo in props.todoList" 
+      :key="todo.id" 
+      :todo="todo"
+      @delete-todo="deleteTodo"
+      @edit-todo="editTodo"
+    />
   </div>
 </template>
 
 <script setup>
 import TodoItem from './TodoItem.vue'
 
-defineProps({
+const props = defineProps({
   todoList: {
     type: Array,
     default: () => []
+  },
+  deleteTodo: {
+    type: Function,
+    default: () => []
+  },
+  editTodo: {
+    type: Function,
+    default: () => []
   }
 })
+
+const deleteTodo = (id) => props.deleteTodo(id)
+
+const editTodo = (editParams) => props.editTodo(editParams)
 
 </script>
 
